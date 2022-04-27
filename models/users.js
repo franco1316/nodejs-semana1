@@ -1,40 +1,36 @@
-const { DataTypes } = require( 'sequelize' )
+const { DataTypes } = require("sequelize");
 
-const { db } = require( '../utils/database' )
+const { db } = require("../utils/database");
 
+const User = db.define("user", {
+  id: {
+    primaryKey: true,
+    autoIncrement: true,
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
 
-const User = db.define( 'user', {
+  name: {
+    type: DataTypes.STRING,
+  },
 
-    id: {
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
-        type: DataTypes.INTEGER
-    },
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+  },
 
-    name: {
-        type: DataTypes.STRING
-    },
+  password: {
+    type: DataTypes.STRING,
+  },
 
-    email: {
-        type: DataTypes.STRING,
-        unique: true
-    },
+  role: {
+    type: DataTypes.STRING,
+  },
 
-    password: {
-        type: DataTypes.STRING
-    },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: "available",
+  },
+});
 
-    role: {
-        type: DataTypes.STRING
-    },
-
-    status: {
-        type: DataTypes.STRING,
-        defaultValue: 'available'
-    }
-
-} )
-
-
-module.exports = { User }
+module.exports = { User };

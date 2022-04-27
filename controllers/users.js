@@ -1,104 +1,66 @@
-const { User } = require( '../models/users' )
+const { User } = require("../models/users");
 
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.findAll();
 
-const getAllUsers = async ( req, res ) => {
+    res.status(200).json({ users });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-    try {
+const getUserById = async (req, res) => {
+  try {
+    const { user } = req;
 
-        const users = await User.findAll()
+    res.status(200).json({ user });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-        res.status( 200 ).json( { users } )
-        
-    } catch (error) {
+const postUser = async (req, res) => {
+  try {
+    const { name, email, password, role } = req.body;
 
-        console.log(error)
+    const newUser = await User.create({ name, email, password, role });
 
-    }
+    res.status(201).json({ newUser });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-}
+const updateUser = async (req, res) => {
+  try {
+    const { user } = req;
+    const { name, email } = req.body;
 
+    await user.update({ name, email });
 
-const getUserById = async ( req, res ) => {
-      
-    try {
-        
-        const { user } = req
+    res.status(200).json({ status: "success" });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-        res.status( 200 ).json( { user } )
+const deleteUser = async (req, res) => {
+  try {
+    const { user } = req;
 
-    } catch (error) {
+    await user.update({ status: "unavailable" });
 
-        console.log(error)
-        
-    }
-
-}
-
-
-const postUser = async ( req, res ) => {
-
-    try {
-
-        const { name, email, password, role } = req.body
-
-        const newUser = await User.create( { name, email, password, role } )
-
-        res.status( 201 ).json( { newUser } )
-        
-    } catch (error) {
-        
-        console.log(error)
-
-    }
-
-}
-
-
-const updateUser = async ( req, res ) => {
-     
-    try {
-        
-        const { user } = req
-        const { name, email } = req.body
-
-        await user.update( { name, email } )
-
-        res.status( 200 ).json( { status: 'success' } )
-
-    } catch (error) {
-        
-        console.log(error)
-
-    }
-
-}
-
-
-
-const deleteUser = async ( req, res ) => {
-
-    try {
-
-        const { user } = req
-
-        await user.update( { status: 'unavailable' } )
-
-        res.status(200).json( { status: 'success' } )
-        
-    } catch (error) {
-        
-        console.log(error)
-
-    }
-
-}
-
-
+    res.status(200).json({ status: "success" });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 module.exports = {
-    getAllUsers,
-    getUserById,
-    postUser,
-    updateUser,
-    deleteUser
-}
+  getAllUsers,
+  getUserById,
+  postUser,
+  updateUser,
+  deleteUser,
+};
