@@ -43,9 +43,9 @@ const postRepair = async ( req, res ) => {
 
         const { date } = req.body
 
-        const newRepair = await Repair
-            .create( { date } )
-            .update( { userId: req.body.id } )
+        const newRepair = await Repair.create( { date } )
+
+            newRepair.update( { userId: req.body.id } )
 
         res.status( 201 ).json( { newRepair } )
         
@@ -62,9 +62,10 @@ const updateRepair = async ( req, res ) => {
 
     try {
 
-        const {repair} = req
+        const { repair } = req
+        const { date, userId } = req.body
         
-        await repair.update( { status: 'completed' } )
+        await repair.update( { date, userId } )
 
         res.status( 200 ).json( { status: 'completed' } )
         
